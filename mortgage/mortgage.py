@@ -51,11 +51,43 @@ class Mortgage:
         if frequency not in PaymentFrequency:
             raise ValueError("Frequency must be a value of PaymentFrequency type.")
         
-        self._loan_amount = loan_amount
-        self._annual_interest_rate = annual_interest_rate
-        self._amortization = amortization
-        self._frequency = frequency
+        self.__loan_amount = loan_amount
+        self.annual_interest_rate = annual_interest_rate
+        self.amortization = amortization
+        self.frequency = frequency
 
+    # def accessors and mutators for loan_amount
+    # accessor
+    @property
+    def loan_amount(self) -> float:
+        """ Gets the amount for the loan.
 
+        Returns:
+            float: the value amount of the loan.
+        """
+        
+        return self.__loan_amount
+
+    # mutator
+    @loan_amount.setter
+    def loan_amount(self, loan_amount: float) -> None:
+        """ mutator for loan amount.
+        
+        Args: 
+            loan_amount (float): a float representing the amount of the loan.
+
+        Raises:
+            TypeError: Raised when type isn't numeric.
+        """
+
+        # Verify if loan_amount is valid
+        if not isinstance(loan_amount, (int, float)):
+            raise TypeError ("Loan amount must be a value of a numeric type.")
+
+        if loan_amount <= 0:
+            raise ValueError("Loan Amount must be a value greater than zero.")
+        
+        self.__loan_amount = loan_amount
+        
     
 
