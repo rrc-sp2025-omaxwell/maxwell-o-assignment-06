@@ -52,7 +52,7 @@ class Mortgage:
             raise ValueError("Frequency must be a value of PaymentFrequency type.")
         
         self.__loan_amount = loan_amount
-        self.annual_interest_rate = annual_interest_rate
+        self.__annual_interest_rate = annual_interest_rate
         self.amortization = amortization
         self.frequency = frequency
 
@@ -78,6 +78,7 @@ class Mortgage:
 
         Raises:
             TypeError: Raised when type isn't numeric.
+            ValueError: Raised when value is less than or equal to zero.
         """
 
         # Verify if loan_amount is valid
@@ -89,26 +90,44 @@ class Mortgage:
         
         self.__loan_amount = loan_amount
         
-    # Update value
-    def update_loan_amount(self, loan_amount: float) -> None:
-        """Update the loan_amount
+    # def accessor and mutator for annual interest rate
+    # accessor
+    @property
+    def annual_interest_rate(self) -> float:
+        """Gets the amount of the annual interest rate
 
-        Args:
-            loan_amount(float): the amount of the loan amount,
-            positive float and int only.
-        Raises:
-            TypeError: When input is not int or float.
-            ValueError: When amount is 0 or negative.
-
+        Returns:
+            float: amount of annual interest rate
+        
         """
-        if not isinstance(loan_amount, (int, float)):
-            raise TypeError ("Loan amount must be a value of a numeric type.")
 
-        if loan_amount <= 0:
-            raise ValueError("Loan Amount must be a value greater than zero.")
+        return self.__annual_interest_rate
+    
+    # mutator
+    def annual_interest_rate(self, annual_interest_rate: float) -> None:
+        """Mutator for amount of the annual interest rate
+
+        Args: annual_interest_rate(float): a float representing annual_interest_rate
+
+        Raises:       
+            TypeError: Raised when type is non numeric.
+            ValueError: Raised whe value is less than or equal to zero,
+            or when value is greater than one.
+        """
+
+        # verify if annual_interest_rate is valid
+        if not isinstance(annual_interest_rate, (int, float)):
+            raise TypeError("Annual Interest Rate must be a value of a numeric type.")
         
-        self.__loan_amount = loan_amount
+        if annual_interest_rate <= 0:
+            raise ValueError("Annual interest rate must be a value" \
+            " greater than zero and less than or equal to 1.")
         
+        if annual_interest_rate > 1:
+            raise ValueError("Annual interest rate cannot be a value greater than 1.")
+    
+        self.__annual_interest_rate = annual_interest_rate
+   
     # repr
     def __repr__(self) -> str:
         """Returns a string representation of the object.

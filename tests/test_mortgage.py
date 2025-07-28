@@ -174,10 +174,11 @@ class TestMortgage(unittest.TestCase):
         self.assertEqual(mortgage.annual_interest_rate, annual_interest_rate)
         self.assertEqual(mortgage.amortization, amortization)
         self.assertEqual(mortgage.frequency, frequency)
-
+    
+    #-------------------------------------------------------
     # Accessor and Mutator testing
 
-    # Loan
+    # loan_amount accessor/mutator unittesting
 
     # non-numeric
     def test_loan_amount_mutator_not_numeric(self):
@@ -231,3 +232,17 @@ class TestMortgage(unittest.TestCase):
         # Assert
         self.assertEqual (mortgage.loan_amount, 10)
     
+    #-------------------------------------------------------
+    # annual_interest_rate accessor/mutator unittesting
+    def test_interest_rate_not_numeric(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Annual Interest Rate must be a value of a numeric type."
+
+        # act and assert
+        with self.assertRaises(TypeError) as context:
+            mortgage.annual_interest_rate = "INVALID"
+        self.assertEqual(expected, str(context.exception))
+
+
+
