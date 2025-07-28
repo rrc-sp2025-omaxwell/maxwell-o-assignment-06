@@ -9,8 +9,6 @@ from mortgage.payment_frequency import PaymentFrequency
 
 import unittest
 
-# (self, loan_amount: float, annual_interest_rate: float,
-                  #amortization: int, frequency: PaymentFrequency)
 class TestMortgage(unittest.TestCase):
     
     # 1, TypeError when loan amount is not numeric
@@ -175,7 +173,7 @@ class TestMortgage(unittest.TestCase):
         self.assertEqual(mortgage.amortization, amortization)
         self.assertEqual(mortgage.frequency, frequency)
     
-    #-------------------------------------------------------
+#----------------------------------------------------------------------
     # Accessor and Mutator testing
 
     # loan_amount accessor/mutator unittesting
@@ -232,8 +230,10 @@ class TestMortgage(unittest.TestCase):
         # Assert
         self.assertEqual (mortgage.loan_amount, 10)
     
-    #-------------------------------------------------------
+#----------------------------------------------------------------------
     # annual_interest_rate accessor/mutator unittesting
+
+    # TypeError, not numeric
     def test_interest_rate_not_numeric(self):
         # Arrange
         mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
@@ -244,5 +244,61 @@ class TestMortgage(unittest.TestCase):
             mortgage.annual_interest_rate = "INVALID"
         self.assertEqual(expected, str(context.exception))
 
+    # ValueError, less than 0
+    def test_interest_rate_less_than_zero(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Annual interest rate must be a value" \
+            " greater than zero and less than or equal to 1."
+
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.annual_interest_rate = -1
+        self.assertEqual(expected, str(context.exception))
+
+    # ValueError, value = 0
+    def test_interest_rate_is_zero(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Annual interest rate must be a value" \
+            " greater than zero and less than or equal to 1."
+
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.annual_interest_rate = 0
+        self.assertEqual(expected, str(context.exception))
+
+    # ValueError, greater than one
+    def test_interest_rate_greater_than_one(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Annual interest rate cannot be a value greater than 1."
+
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.annual_interest_rate = 2
+        self.assertEqual(expected, str(context.exception))
+
+    # property update current state
+    def test_annual_interest_rate_update_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = 0.75
+    
+        # Act
+        mortgage.annual_interest_rate = 0.75
+        # Assert
+        self.assertEqual(expected, mortgage.loan_amount)
+
+
+    # property return current state
+    def test_interest_rate_accessor_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+
+        # Act and Assert
+        self.assertEqual(mortgage.annual_interest_rate, 0.5)
+        
+#----------------------------------------------------------------------
 
 

@@ -104,6 +104,7 @@ class Mortgage:
         return self.__annual_interest_rate
     
     # mutator
+    @annual_interest_rate.setter
     def annual_interest_rate(self, annual_interest_rate: float) -> None:
         """Mutator for amount of the annual interest rate
 
@@ -128,6 +129,9 @@ class Mortgage:
     
         self.__annual_interest_rate = annual_interest_rate
    
+
+
+
     # repr
     def __repr__(self) -> str:
         """Returns a string representation of the object.
