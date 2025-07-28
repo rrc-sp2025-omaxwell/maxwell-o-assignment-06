@@ -12,12 +12,10 @@ class Mortgage:
     # list containing the years a mortgage can
     #  be amortized (payed over) for.
     
-    
+    amortization_list = [5, 10, 15, 20, 25, 30]    
 
     def __init__(self, loan_amount: float, annual_interest_rate: float,
                   amortization: int, frequency: PaymentFrequency):
-        
-        amortization_list = [5, 10, 15, 20, 25, 30]
         
         # Verify if loan_amount is valid
         if not isinstance(loan_amount, (int, float)):
@@ -42,7 +40,7 @@ class Mortgage:
 
         # Verify if amortization is valid
         
-        if amortization not in amortization_list:
+        if amortization not in Mortgage.amortization_list:
             raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
 
         
@@ -53,7 +51,7 @@ class Mortgage:
         
         self.__loan_amount = loan_amount
         self.__annual_interest_rate = annual_interest_rate
-        self.amortization = amortization
+        self.__amortization = amortization
         self.frequency = frequency
 
     # def accessors and mutators for loan_amount
@@ -129,8 +127,31 @@ class Mortgage:
     
         self.__annual_interest_rate = annual_interest_rate
    
+    # def accessor and mutator for amortization
+    # accessor
+    @property
+    def amortization(self) -> int:
+        """ Gets the value of the amortization for mortgage.
 
+        Returns:
+            int: value of amortization
+        """
+        return self.__amortization
 
+    # mutator
+    @amortization.setter
+    def amortization(self, amortization: int) -> None:
+        """ Mutator for value of amortization.
+
+        Args:
+            amortization(int): an integer value representing amortization.
+
+        Raises:
+            ValueError: If value is not in amortization list.
+        """
+
+        if amortization not in Mortgage.amortization_list:
+            raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
 
     # repr
     def __repr__(self) -> str:

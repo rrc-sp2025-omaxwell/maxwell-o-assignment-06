@@ -288,7 +288,7 @@ class TestMortgage(unittest.TestCase):
         # Act
         mortgage.annual_interest_rate = 0.75
         # Assert
-        self.assertEqual(expected, mortgage.loan_amount)
+        self.assertEqual(expected, mortgage.annual_interest_rate)
 
 
     # property return current state
@@ -301,4 +301,16 @@ class TestMortgage(unittest.TestCase):
         
 #----------------------------------------------------------------------
 
+    # Amortization accessor and mutator testing
 
+    # ValueError, if not in amortization_list
+    def test_amortization_proporty_not_in_list(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Amortization must be a value in [5, 10, 15, 20, 25, 30]."
+
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.amortization = "not in list"
+            
+        self.assertEqual(expected, str(context.exception))
