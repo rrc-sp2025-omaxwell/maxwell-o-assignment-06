@@ -16,7 +16,28 @@ class Mortgage:
 
     def __init__(self, loan_amount: float, annual_interest_rate: float,
                   amortization: int, frequency: PaymentFrequency):
+        """ defines the variables of the mortgage account.
         
+        Args:
+            loan_amount (float): determines the amount of a loan.
+            annual_interest_rate (float): a float representing the interest on mortgage.
+            amortization (int): an integer referencing how many yeas the mortgage
+                is payed over.
+            frequency (PaymentFrequency.(valid timeframe) / int ): pulls an int number
+                representing how frequent payments are made through the
+                     Payment Frequency class.
+
+        Raises
+            TypeError: When an input value is the incorrect datatype.
+            ValueError: When the input value is out of bounds of accepted
+                value constraints.
+        
+        Returns:
+            loan_amount (float): amount of loan as a float
+            annual_interest_rate (float): float value of interest year over year.
+            amortization (int): years loan is payed over.
+            frequency (int): how frequent payments are made.
+        """
         # Verify if loan_amount is valid
         if not isinstance(loan_amount, (int, float)):
             raise TypeError ("Loan amount must be a value of a numeric type.")
