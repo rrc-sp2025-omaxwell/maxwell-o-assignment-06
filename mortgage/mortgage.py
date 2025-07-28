@@ -152,6 +152,8 @@ class Mortgage:
 
         if amortization not in Mortgage.amortization_list:
             raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
+        
+        self.__amortization = amortization
 
     # repr
     def __repr__(self) -> str:

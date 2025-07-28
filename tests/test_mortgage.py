@@ -299,6 +299,7 @@ class TestMortgage(unittest.TestCase):
         # Act and Assert
         self.assertEqual(mortgage.annual_interest_rate, 0.5)
         
+        
 #----------------------------------------------------------------------
 
     # Amortization accessor and mutator testing
@@ -314,3 +315,26 @@ class TestMortgage(unittest.TestCase):
             mortgage.amortization = "not in list"
             
         self.assertEqual(expected, str(context.exception))
+
+    # property can update state
+    def test_amortization_property_update_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = 15
+
+        # Act
+        mortgage.amortization = 15
+
+        # Assert
+        self.assertEqual(expected, mortgage.amortization)
+
+    # property returns current state
+    def test_amortization_returns_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+
+        # Act and Assert
+        self.assertEqual(mortgage.amortization, 5)
+
+
+#----------------------------------------------------------------------
