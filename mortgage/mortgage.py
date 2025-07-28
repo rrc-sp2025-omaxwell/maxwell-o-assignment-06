@@ -52,7 +52,7 @@ class Mortgage:
         self.__loan_amount = loan_amount
         self.__annual_interest_rate = annual_interest_rate
         self.__amortization = amortization
-        self.frequency = frequency
+        self.__frequency = frequency
 
     # def accessors and mutators for loan_amount
     # accessor
@@ -154,6 +154,31 @@ class Mortgage:
             raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
         
         self.__amortization = amortization
+
+    
+    # def accessor and mutators for frequency
+    
+    # accessor
+    @property
+    def frequency(self) -> int:
+        """Returns a value corresponding to frequency of payments.
+
+        Returns:
+            int: value in the amount of times a payment will be made.        
+        """
+        return self.__frequency
+
+    @frequency.setter
+    def frequency(self, frequency: int) -> None:
+        """
+        
+        """
+
+        if frequency not in PaymentFrequency:
+            raise ValueError("Frequency must be a value of PaymentFrequency type.")
+
+        self.__frequency = frequency
+
 
     # repr
     def __repr__(self) -> str:

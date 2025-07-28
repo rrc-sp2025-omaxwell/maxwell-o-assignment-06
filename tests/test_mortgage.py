@@ -298,7 +298,7 @@ class TestMortgage(unittest.TestCase):
 
         # Act and Assert
         self.assertEqual(mortgage.annual_interest_rate, 0.5)
-        
+
         
 #----------------------------------------------------------------------
 
@@ -338,3 +338,42 @@ class TestMortgage(unittest.TestCase):
 
 
 #----------------------------------------------------------------------
+
+    # frequency accessor and mutator testing
+
+    # ValueError if not in PaymentFrequency
+
+    def test_frequency_invalid(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Frequency must be a value of PaymentFrequency type."
+
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.frequency = "not in list"
+            
+        self.assertEqual(expected, str(context.exception))
+
+
+    # property can update state
+
+    def test_frequency_update_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = PaymentFrequency.WEEKLY
+
+        # Act
+        mortgage.frequency =  PaymentFrequency.WEEKLY
+
+        # Assert
+        self.assertEqual(expected, mortgage.frequency)
+
+    # property can return state
+
+    def test_frequency_return_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+
+        # Act and Assert
+        self.assertEqual(mortgage.frequency, PaymentFrequency.MONTHLY)
+
