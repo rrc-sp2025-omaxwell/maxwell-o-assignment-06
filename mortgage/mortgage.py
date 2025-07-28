@@ -89,5 +89,38 @@ class Mortgage:
         
         self.__loan_amount = loan_amount
         
-    
+    # Update value
+    def update_loan_amount(self, loan_amount: float) -> None:
+        """Update the loan_amount
 
+        Args:
+            loan_amount(float): the amount of the loan amount,
+            positive float and int only.
+        Raises:
+            TypeError: When input is not int or float.
+            ValueError: When amount is 0 or negative.
+
+        """
+        if not isinstance(loan_amount, (int, float)):
+            raise TypeError ("Loan amount must be a value of a numeric type.")
+
+        if loan_amount <= 0:
+            raise ValueError("Loan Amount must be a value greater than zero.")
+        
+        self.__loan_amount = loan_amount
+        
+    # repr
+    def __repr__(self) -> str:
+        """Returns a string representation of the object.
+
+        Returns:
+            str: string representation of the object
+
+        Example:
+            >>> Mortgage()
+        """
+
+        return (f"{self.loan_amount} | "
+                + f"{self.annual_interest_rate} | "
+                + f"{self.amortization} | "
+                + f"{self.frequency}")

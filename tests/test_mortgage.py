@@ -179,6 +179,7 @@ class TestMortgage(unittest.TestCase):
 
     # Loan
 
+    # non-numeric
     def test_loan_amount_mutator_not_numeric(self):
         # Arrange
         mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
@@ -188,5 +189,45 @@ class TestMortgage(unittest.TestCase):
         with self.assertRaises(TypeError) as context:
             mortgage.loan_amount = "INVALID"
         self.assertEqual(expected, str(context.exception))
+    
+    # amount zero
+    def test_loan_amount_mutator_amount_zero(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Loan Amount must be a value greater than zero."
+    
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.loan_amount = 0
+        self.assertEqual(expected, str(context.exception))
 
+    # amount less than zero
+    def test_loan_amount_mutator_less_than_zero(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = "Loan Amount must be a value greater than zero."
+    
+        # act and assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.loan_amount = -5
+        self.assertEqual(expected, str(context.exception))
 
+    # updates current state
+    def test_loan_amount_mutator_update_state(self):
+        # Arrange
+        mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
+        expected = 10
+    
+        # Act
+        mortgage.loan_amount = 10
+        # Assert
+        self.assertEqual(expected, mortgage.loan_amount)
+
+    # returns current state
+    def test_loan_amount_accessor_state(self):
+        # Arrange and Act
+        mortgage = Mortgage(10, 0.5, 5, PaymentFrequency.MONTHLY)
+        
+        # Assert
+        self.assertEqual (mortgage.loan_amount, 10)
+    
