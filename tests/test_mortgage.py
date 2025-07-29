@@ -432,3 +432,36 @@ class TestMortgage(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             mortgage.amortization = 7
         self.assertEqual(expected, str(context.exception))
+
+#----------------------------------------------------------------------
+
+    # __repr__ test
+    def test_repr_mortgage(self):
+        # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = (" Mortgage(123456.78, "
+                    + "0.03219, "
+                    + "10, "
+                    + "PaymentFrequency.WEEKLY)")
+        
+        # act
+        actual = repr(mortgage)
+
+        # Assert
+        self.assertEqual(expected, actual)
+
+    # __str__ test
+
+    def test_str_mortgage(self):
+    # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = ("Mortgage Amount: $123456.78 "
+                + "\nAnnual Interest Rate: 3.22%"
+                + "\nAmortization: 10"
+                + "\nFrequency: PaymentFrequency.WEEKLY")
+        
+        # act
+        actual = str(mortgage)
+
+        # Assert
+        self.assertEqual(expected, actual)

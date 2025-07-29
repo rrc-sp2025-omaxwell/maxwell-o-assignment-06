@@ -237,7 +237,7 @@ class Mortgage:
 
 
     # repr
-    #def __repr__(self) -> str:
+    def __repr__(self) -> str:
         """Returns a canonica string representation of the object.
 
         Returns:
@@ -247,14 +247,13 @@ class Mortgage:
             >>> Mortgage()
         """
 
-
-        return (f" Mortgage ({self.loan_amount} | "
-                + f"{self.annual_interest_rate} | "
-                + f"{self.amortization} | "
+        return str(f" Mortgage({self.loan_amount}, "
+                + f"{self.annual_interest_rate}, "
+                + f"{self.amortization}, "
                 + f"{self.frequency})")
     
     # str
-    #def __str__(self) -> str:
+    def __str__(self) -> str:
         """Returns an informal string representation of the object.
 
         Returns:
@@ -263,9 +262,8 @@ class Mortgage:
         Example:
             >>> Mortgage()
         """
+        return str(f"Mortgage Amount: ${self.loan_amount} "
+                + f"\nAnnual Interest Rate: {(self.annual_interest_rate * 100):.2f}%"
+                + f"\nAmortization: {self.amortization}"
+                + f"\nFrequency: {self.frequency}")
 
-
-        return (f" Mortgage ({self.loan_amount} | "
-                + f"{self.annual_interest_rate} | "
-                + f"{self.amortization} | "
-                + f"{self.frequency})")
