@@ -32,11 +32,6 @@ class Mortgage:
             ValueError: When the input value is out of bounds of accepted
                 value constraints.
         
-        Returns:
-            loan_amount (float): amount of loan as a float
-            annual_interest_rate (float): float value of interest year over year.
-            amortization (int): years loan is payed over.
-            frequency (int): how frequent payments are made.
         """
         # Verify if loan_amount is valid
         if not isinstance(loan_amount, (int, float)):
@@ -66,7 +61,7 @@ class Mortgage:
 
         
         # Verify if frequency is valid
-
+        
         if frequency not in PaymentFrequency:
             raise ValueError("Frequency must be a value of PaymentFrequency type.")
         
@@ -187,23 +182,60 @@ class Mortgage:
         Returns:
             int: value in the amount of times a payment will be made.        
         """
+
         return self.__frequency
 
     @frequency.setter
-    def frequency(self, frequency: int) -> None:
+    def frequency(self, frequency: PaymentFrequency) -> None:
+        """Returns a value corresponding to frequency of payments.
+        Args:
+            frequency (int): integer representing how often payments are made.
+        Raises:
+            ValueError: When amount is not listed in PaymentFrequency class.       
         """
         
-        """
-
         if frequency not in PaymentFrequency:
             raise ValueError("Frequency must be a value of PaymentFrequency type.")
 
         self.__frequency = frequency
 
+    def get_payment(self) -> float:
+        """ 
+        Returns the payment amount of the mortgage
+
+        Returns:
+            float
+        
+        """
+        
+        
+        mortgage = Mortgage(682912.43, 0.0599, 10, PaymentFrequency.MONTHLY)
+
+        # formula for i (interest rate), annual rate divided by frequency
+        interest_rate = mortgage.annual_interest_rate / PaymentFrequency(mortgage.frequency).value
+
+        # formula for n (num of payments), amortization multiplied by frequency
+        number_of_payments = mortgage.amortization * PaymentFrequency(mortgage.frequency).value
+
+        principle_loan_amount = mortgage.loan_amount
+
+        dividend = interest_rate * ((1 + interest_rate) ** number_of_payments)
+
+        divisor = ((1 + interest_rate) ** number_of_payments) - 1
+
+        payment = principle_loan_amount * (dividend/divisor)
+
+        payment = round(payment, 2)
+
+        return payment
+
+
+
+
 
     # repr
     def __repr__(self) -> str:
-        """Returns a string representation of the object.
+        """Returns a canonica string representation of the object.
 
         Returns:
             str: string representation of the object
@@ -212,7 +244,25 @@ class Mortgage:
             >>> Mortgage()
         """
 
-        return (f"{self.loan_amount} | "
+
+        return (f" Mortgage ({self.loan_amount} | "
                 + f"{self.annual_interest_rate} | "
                 + f"{self.amortization} | "
-                + f"{self.frequency}")
+                + f"{self.frequency})")
+    
+    # str
+    def __str__(self) -> str:
+        """Returns an informal string representation of the object.
+
+        Returns:
+            str: string representation of the object
+
+        Example:
+            >>> Mortgage()
+        """
+
+
+        return (f" Mortgage ({self.loan_amount} | "
+                + f"{self.annual_interest_rate} | "
+                + f"{self.amortization} | "
+                + f"{self.frequency})")

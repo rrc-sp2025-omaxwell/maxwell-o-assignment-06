@@ -343,7 +343,7 @@ class TestMortgage(unittest.TestCase):
 
     # ValueError if not in PaymentFrequency
 
-    def test_frequency_invalid(self):
+    def test_frequency_property_invalid(self):
         # Arrange
         mortgage = Mortgage(5, 0.5, 5, PaymentFrequency.MONTHLY)
         expected = "Frequency must be a value of PaymentFrequency type."
@@ -363,7 +363,7 @@ class TestMortgage(unittest.TestCase):
         expected = PaymentFrequency.WEEKLY
 
         # Act
-        mortgage.frequency =  PaymentFrequency.WEEKLY
+        mortgage.frequency = PaymentFrequency.WEEKLY
 
         # Assert
         self.assertEqual(expected, mortgage.frequency)
@@ -377,3 +377,12 @@ class TestMortgage(unittest.TestCase):
         # Act and Assert
         self.assertEqual(mortgage.frequency, PaymentFrequency.MONTHLY)
 
+
+    def test_get_payment(self):
+        # Arrange
+        mortgage = Mortgage(682912.43, 0.0599, 10, PaymentFrequency.MONTHLY)
+        expected = round(7578.30, 2)
+
+        # Act and Assert
+        actual = mortgage.get_payment()
+        self.assertEqual(expected, actual)
