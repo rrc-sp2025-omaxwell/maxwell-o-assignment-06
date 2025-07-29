@@ -207,17 +207,20 @@ class Mortgage:
             float
         
         """
+        loan_amount = self.__loan_amount
+        annual_interest_rate = self.__annual_interest_rate
+        amortization = self.__amortization
+        frequency = self.__frequency
         
         
-        mortgage = Mortgage(682912.43, 0.0599, 10, PaymentFrequency.MONTHLY)
 
         # formula for i (interest rate), annual rate divided by frequency
-        interest_rate = mortgage.annual_interest_rate / PaymentFrequency(mortgage.frequency).value
+        interest_rate = annual_interest_rate / PaymentFrequency(frequency).value
 
         # formula for n (num of payments), amortization multiplied by frequency
-        number_of_payments = mortgage.amortization * PaymentFrequency(mortgage.frequency).value
+        number_of_payments = amortization * PaymentFrequency(frequency).value
 
-        principle_loan_amount = mortgage.loan_amount
+        principle_loan_amount = loan_amount
 
         dividend = interest_rate * ((1 + interest_rate) ** number_of_payments)
 
@@ -234,7 +237,7 @@ class Mortgage:
 
 
     # repr
-    def __repr__(self) -> str:
+    #def __repr__(self) -> str:
         """Returns a canonica string representation of the object.
 
         Returns:
@@ -251,7 +254,7 @@ class Mortgage:
                 + f"{self.frequency})")
     
     # str
-    def __str__(self) -> str:
+    #def __str__(self) -> str:
         """Returns an informal string representation of the object.
 
         Returns:

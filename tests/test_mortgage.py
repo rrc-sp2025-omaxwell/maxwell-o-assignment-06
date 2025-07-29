@@ -377,8 +377,10 @@ class TestMortgage(unittest.TestCase):
         # Act and Assert
         self.assertEqual(mortgage.frequency, PaymentFrequency.MONTHLY)
 
+#----------------------------------------------------------------------
 
-    def test_get_payment(self):
+    # test using assignment example inputs
+    def test_get_payment_example(self):
         # Arrange
         mortgage = Mortgage(682912.43, 0.0599, 10, PaymentFrequency.MONTHLY)
         expected = round(7578.30, 2)
@@ -386,3 +388,47 @@ class TestMortgage(unittest.TestCase):
         # Act and Assert
         actual = mortgage.get_payment()
         self.assertEqual(expected, actual)
+
+    # test using assignment custom inputs
+    def test_get_payment_custom_inputs(self):
+        # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = round(277.75, 2)
+
+        # Act and Assert
+        actual = mortgage.get_payment()
+        self.assertEqual(expected, actual)
+
+    # test get_payment interest greater than one
+    def test_get_payment_interest_over_one(self):
+        # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = "Annual interest rate cannot be a value greater than 1."
+
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.annual_interest_rate = 2
+        self.assertEqual(expected, str(context.exception))
+
+    # test get_payment invalid frequency
+    def test_get_payment_invalid_frequency(self):
+        # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = "Frequency must be a value of PaymentFrequency type."
+
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.frequency = "DAILY"
+        self.assertEqual(expected, str(context.exception))
+
+
+    # test get_payment invalid amortization
+    def test_get_payment_invalid_amortization(self):
+        # Arrange
+        mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
+        expected = "Amortization must be a value in [5, 10, 15, 20, 25, 30]."
+
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            mortgage.amortization = 7
+        self.assertEqual(expected, str(context.exception))
