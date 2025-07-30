@@ -1,4 +1,3 @@
-
 __author__ = "Owen Maxwell"
 __version__ = "1.0.0"
 
@@ -6,13 +5,15 @@ __version__ = "1.0.0"
 from mortgage.payment_frequency import PaymentFrequency
 
 class Mortgage:
-    """
+    """ Processes specific information about a loan
+      and returns the required amount per payment
+      as a float value.
     """
 
     # list containing the years a mortgage can
     #  be amortized (payed over) for.
     
-    amortization_list = [5, 10, 15, 20, 25, 30]    
+    __amortization_list = [5, 10, 15, 20, 25, 30]    
 
     def __init__(self, loan_amount: float, annual_interest_rate: float,
                   amortization: int, frequency: PaymentFrequency):
@@ -23,9 +24,9 @@ class Mortgage:
             annual_interest_rate (float): a float representing the interest on mortgage.
             amortization (int): an integer referencing how many yeas the mortgage
                 is payed over.
-            frequency (PaymentFrequency.(valid timeframe) / int ): pulls an int number
+            frequency (PaymentFrequency): pulls an int number 
                 representing how frequent payments are made through the
-                     Payment Frequency class.
+                PaymentFrequency class.
 
         Raises
             TypeError: When an input value is the incorrect datatype.
@@ -56,7 +57,7 @@ class Mortgage:
 
         # Verify if amortization is valid
         
-        if amortization not in Mortgage.amortization_list:
+        if amortization not in Mortgage.__amortization_list:
             raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
 
         
@@ -65,10 +66,10 @@ class Mortgage:
         if frequency not in PaymentFrequency:
             raise ValueError("Frequency must be a value of PaymentFrequency type.")
         
-        self.__loan_amount = loan_amount
-        self.__annual_interest_rate = annual_interest_rate
-        self.__amortization = amortization
-        self.__frequency = frequency
+        self.loan_amount = loan_amount
+        self.annual_interest_rate = annual_interest_rate
+        self.amortization = amortization
+        self.frequency = frequency
 
     # def accessors and mutators for loan_amount
     # accessor
@@ -166,7 +167,7 @@ class Mortgage:
             ValueError: If value is not in amortization list.
         """
 
-        if amortization not in Mortgage.amortization_list:
+        if amortization not in Mortgage.__amortization_list:
             raise ValueError("Amortization must be a value in [5, 10, 15, 20, 25, 30].")
         
         self.__amortization = amortization
@@ -205,8 +206,8 @@ class Mortgage:
 
         Returns:
             float
-        
         """
+
         loan_amount = self.__loan_amount
         annual_interest_rate = self.__annual_interest_rate
         amortization = self.__amortization
@@ -220,20 +221,14 @@ class Mortgage:
         # formula for n (num of payments), amortization multiplied by frequency
         number_of_payments = amortization * PaymentFrequency(frequency).value
 
-        principle_loan_amount = loan_amount
-
         dividend = interest_rate * ((1 + interest_rate) ** number_of_payments)
-
         divisor = ((1 + interest_rate) ** number_of_payments) - 1
 
-        payment = principle_loan_amount * (dividend/divisor)
+        payment = loan_amount * (dividend/divisor)
 
         payment = round(payment, 2)
 
         return payment
-
-
-
 
 
     # repr
@@ -262,7 +257,7 @@ class Mortgage:
         Example:
             >>> Mortgage()
         """
-        return str(f"Mortgage Amount: ${self.loan_amount} "
+        return str(f"Mortgage Amount: ${self.loan_amount:,.2f} "
                 + f"\nAnnual Interest Rate: {(self.annual_interest_rate * 100):.2f}%"
                 + f"\nAmortization: {self.amortization}"
                 + f"\nFrequency: {self.frequency}")

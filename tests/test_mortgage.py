@@ -1,9 +1,7 @@
 __author__ = "Owen Maxwell"
 __version__ = "1.0.0"
 
-import sys
-import os
-sys.path.append('maxwell-o-assignment-06')
+
 from mortgage.mortgage import Mortgage
 from mortgage.payment_frequency import PaymentFrequency
 
@@ -455,7 +453,7 @@ class TestMortgage(unittest.TestCase):
     def test_str_mortgage(self):
     # Arrange
         mortgage = Mortgage(123456.78, 0.03219, 10, PaymentFrequency.WEEKLY)
-        expected = ("Mortgage Amount: $123456.78 "
+        expected = ("Mortgage Amount: $123,456.78 "
                 + "\nAnnual Interest Rate: 3.22%"
                 + "\nAmortization: 10"
                 + "\nFrequency: PaymentFrequency.WEEKLY")
