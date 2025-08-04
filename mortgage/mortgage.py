@@ -220,7 +220,6 @@ class Mortgage:
 
         # formula for n (num of payments), amortization multiplied by frequency
         number_of_payments = amortization * PaymentFrequency(frequency).value
-
         dividend = interest_rate * ((1 + interest_rate) ** number_of_payments)
         divisor = ((1 + interest_rate) ** number_of_payments) - 1
 

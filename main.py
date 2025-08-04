@@ -27,7 +27,7 @@ def main():
 # 3. Print the payment amount for the mortgage. Format the payment 
 #    amount as currency.
     #payment_amount = mortgage.get_payment()
-    print (f"${(mortgage.get_payment()):,.2f}")
+    print (f"Payment Amount: ${(mortgage.get_payment()):,.2f}")
 
 # 4. Update the state of the object such that all attributes values are 
 #    different than what they were initialized to.
@@ -36,16 +36,22 @@ def main():
     mortgage.annual_interest_rate = 0.1234
     mortgage.amortization = 15
     mortgage.frequency = PaymentFrequency.MONTHLY
+    print("--------------------------------------------------")
+    print("2nd Instance")
+    print(mortgage)
+    print (f"Payment Amount: ${(mortgage.get_payment()):,.2f}")
 
 # 5. Choose any attribute of the object and print it's current state.
-    print (f"Amortization: {mortgage.amortization}")
+    print("--------------------------------------------------")
+
+    print (f"Changed attribute state:\nAmortization: {mortgage.amortization}")
 
 # 6. Attempt to create another instance of the Mortgage class. The 
 #    statement must use one value that will cause the initialization
 #    to fail. Prevent the script from abnormally ending and print the
 #    error message to the console.
     print("--------------------------------------------------")
-    print("2nd Instance")
+    print("3rd Instance")
 
     # Attempting to initialize with an annual interest rate
     # greater than 1.
@@ -59,7 +65,7 @@ def main():
         print(f"Error Message: {e}\nException Type: {str(type(e)).split("'")[1]}")
 
     print("--------------------------------------------------")    
-    print("3rd Instance")
+    print("4th Instance")
 
     # Attempting to initialize with a loan amount that is a 
     # string type value, "Money".
